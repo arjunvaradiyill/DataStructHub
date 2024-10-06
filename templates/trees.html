@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tree Operations</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full height */
+        }
+
+        .container {
+            max-width: 800px;
+            padding: 20px;
+            text-align: center;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #4A90E2; /* Blue color */
+        }
+
+        .tree-controls {
+            margin-bottom: 20px;
+        }
+
+        .tree-controls input {
+            padding: 10px;
+            margin: 5px;
+            width: 80%; /* Wider input field */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .output-message {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .elements-display {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .operation-log {
+            margin-top: 20px;
+            background: #d1ecf1;
+            padding: 10px;
+            border-radius: 5px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .operation-log h3 {
+            margin-bottom: 10px;
+            color: #0c5460; /* Darker blue for header */
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .tree-controls input {
+                width: 100%; /* Full width on small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tree Operations</h1>
+        <div class="tree-controls">
+            <form id="insertForm">
+                <label for="insertElements">Insert Elements (comma-separated):</label>
+                <input type="text" id="insertElements" placeholder="e.g., 15, 10, 20">
+                <button type="submit">Insert</button>
+            </form>
+            <form id="deleteForm">
+                <label for="deleteElement">Delete Element:</label>
+                <input type="number" id="deleteElement" placeholder="e.g., 10">
+                <button type="submit">Delete</button>
+            </form>
+            <button id="inOrder">In-Order Traversal</button>
+            <button id="preOrder">Pre-Order Traversal</button>
+            <button id="postOrder">Post-Order Traversal</button>
+            <button id="search">Search Element</button>
+            <input type="number" id="searchElement" placeholder="e.g., 10">
+        </div>
+        <div class="output-message" id="outputMessage"></div>
+        <div class="elements-display" id="treeDisplay"></div>
+        <div class="operation-log" id="operationLog">
+            <h3>Operation Log:</h3>
+            <div id="logEntries"></div>
+        </div>
+    </div>
+
+    <script>
+        const insertForm = document.getElementById('insertForm');
+        const deleteForm = document.getElementById('deleteForm');
+        const outputMessage = document.getElementById('outputMessage');
+        const treeDisplay = document.getElementById('treeDisplay');
+        const logEntries = document.getElementById('logEntries');
+        const tree = [];
+
+        insertForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const elements = document.getElementById('insertElements').value.split(',').map(Number);
+            const uniqueElements = [...new Set(elements)];
+
+            uniqueElements.forEach(element => {
+                if (!tree.includes(element)) {
+                    tree.push(element);
+                }
+            });
+
+            updateDisplay(`Inserted Elements: ${uniqueElements.join(', ')}`);
+            logOperation(`Inserted: ${uniqueElements.join(', ')}`);
+        });
+
+        deleteForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const elementToDelete = Number(document.getElementById('deleteElement').value);
+            const index = tree.indexOf(elementToDelete);
+
+            if (index > -1) {
+                tree.splice(index, 1);
+                updateDisplay(`Deleted Element: ${elementToDelete}`);
+                logOperation(`Deleted: ${elementToDelete}`);
+            } else {
+                updateDisplay(`Element ${elementToDelete} not found.`);
+                logOperation(`Failed to delete: ${elementToDelete} (not found)`);
+            }
+        });
+
+        document.getElementById('inOrder').addEventListener('click', function() {
+            const sortedTree = [...tree].sort((a, b) => a - b);
+            updateDisplay(`In-Order Traversal: ${sortedTree.join(', ')}`);
+            logOperation(`In-Order Traversal: ${sortedTree.join(', ')}`);
+        });
+
+        document.getElementById('preOrder').addEventListener('click', function() {
+            updateDisplay(`Pre-Order Traversal: ${tree.join(', ')}`);
+            logOperation(`Pre-Order Traversal: ${tree.join(', ')}`);
+        });
+
+        document.getElementById('postOrder').addEventListener('click', function() {
+            const postOrderTree = [...tree].reverse();
+            updateDisplay(`Post-Order Traversal: ${postOrderTree.join(', ')}`);
+            logOperation(`Post-Order Traversal: ${postOrderTree.join(', ')}`);
+        });
+
+        document.getElementById('search').addEventListener('click', function() {
+            const elementToSearch = Number(document.getElementById('searchElement').value);
+            if (tree.includes(elementToSearch)) {
+                updateDisplay(`Element ${elementToSearch} found.`);
+                logOperation(`Searched: ${elementToSearch} (found)`);
+            } else {
+                updateDisplay(`Element ${elementToSearch} not found.`);
+                logOperation(`Searched: ${elementToSearch} (not found)`);
+            }
+        });
+
+        function updateDisplay(message) {
+            outputMessage.textContent = message;
+            treeDisplay.textContent = `Tree Structure: ${tree.join(', ')}`;
+        }
+
+        function logOperation(operation) {
+            const newLogEntry = document.createElement('div');
+            newLogEntry.textContent = operation;
+            logEntries.appendChild(newLogEntry);
+            logEntries.scrollTop = logEntries.scrollHeight; // Scroll to the bottom
+        }
+    </script>
+</body>
+</html>

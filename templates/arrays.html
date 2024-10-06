@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Array Operations</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Array Operations</h1>
+        <form id="array-form">
+            <label for="array">Enter elements (comma-separated):</label>
+            <input type="text" id="array" name="array" required>
+            <label for="operation">Select operation:</label>
+            <select id="operation" name="operation" required>
+                <option value="search">Search Element</option>
+                <option value="sort">Sort Array</option>
+            </select>
+            <div id="search-section" style="display: none;">
+                <label for="key">Enter element to search:</label>
+                <input type="number" id="key" name="key">
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+        <h2>Result:</h2>
+        <div id="result"></div>
+    </div>
+    <script>
+        document.getElementById('operation').addEventListener('change', function() {
+            document.getElementById('search-section').style.display = this.value === 'search' ? 'block' : 'none';
+        });
+        
+        document.getElementById('array-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            fetch('/arrays', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerText = JSON.stringify(data.result);
+            });
+        });
+    </script>
+</body>
+</html>

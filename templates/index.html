@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataStructHub</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full viewport height */
+            margin: 0; /* Remove default margin */
+        }
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: box-shadow 0.3s ease; /* Smooth transition for box-shadow */
+        }
+        .container:hover {
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2); /* Shadow on hover */
+        }
+        h1 { 
+            color: #4A90E2; 
+            margin-bottom: 20px; /* Space below the heading */
+        }
+        .nav {
+            list-style-type: none;
+            padding: 0;
+        }
+        .nav li {
+            display: inline;
+            margin: 0 15px;
+        }
+        .nav a {
+            text-decoration: none;
+            color: #4A90E2;
+            font-weight: bold;
+            padding: 10px 15px; /* Add padding for better click area */
+            border-radius: 5px; /* Rounded corners for links */
+            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for background and text color */
+        }
+        .nav a:hover {
+            background-color: #4A90E2; /* Background color on hover */
+            color: white; /* Change text color on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container"> <!-- Container for centering content -->
+        <h1>DataStructHub</h1>
+        <h2>A central hub for various data structures</h2>
+        <ul class="nav"> <!-- Navigation links -->
+            <li><a href="{{ url_for('stacks') }}">Stacks</a></li>
+            <li><a href="{{ url_for('queues') }}">Queues</a></li>
+            <li><a href="{{ url_for('trees') }}">Trees</a></li>
+            <li><a href="{{ url_for('graphs') }}">Graphs</a></li>
+        </ul>
+    </div>
+</body>
+</html>

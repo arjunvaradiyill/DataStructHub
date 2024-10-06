@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Queue Operations</title>
+</head>
+<body class="queue-page">
+    <h1>Queue Operations</h1>
+    <div>
+        <form id="queue-form">
+            <input type="text" id="queue-input" placeholder="Enter an element" required>
+            <button type="button" onclick="enqueue()">Enqueue</button>
+            <button type="button" onclick="dequeue()">Dequeue</button>
+        </form>
+        <div id="output"></div>
+        <h2>Current Queue:</h2>
+        <div id="queue-display"></div>
+    </div>
+
+    <script>
+        const queue = [];
+
+        function enqueue() {
+            const input = document.getElementById("queue-input").value;
+            if (input) {
+                queue.push(input);
+                document.getElementById("queue-input").value = ""; // Clear input
+                displayQueue();
+                document.getElementById("output").innerText = `"${input}" has been added to the queue.`;
+            }
+        }
+
+        function dequeue() {
+            if (queue.length === 0) {
+                document.getElementById("output").innerText = "Queue is empty!";
+            } else {
+                const removed = queue.shift();
+                displayQueue();
+                document.getElementById("output").innerText = `"${removed}" has been removed from the queue.`;
+            }
+        }
+
+        function displayQueue() {
+            document.getElementById("queue-display").innerText = queue.join(", ");
+        }
+    </script>
+</body>
+</html>

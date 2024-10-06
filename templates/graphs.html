@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Graph Operations</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Graph Operations</h1>
+        <div class="graph-controls">
+            <input type="text" id="nodeInput" placeholder="Enter node value" required>
+            <button onclick="addNode()">Add Node</button>
+            <input type="text" id="edgeInput" placeholder="Enter edge (node1,node2)" required>
+            <button onclick="addEdge()">Add Edge</button>
+            <button onclick="dfs()">Depth-First Search (DFS)</button>
+            <button onclick="bfs()">Breadth-First Search (BFS)</button>
+        </div>
+        <div id="graphDisplay" class="graph-display">
+            <h2>Current Graph:</h2>
+            <div id="graphElements" class="elements-display">Graph is empty.</div>
+        </div>
+        <div id="output" class="output-message"></div>
+    </div>
+
+    <script>
+        class Graph {
+            constructor() {
+                this.adjacencyList = {};
+            }
+
+            addNode(node) {
+                if (!this.adjacencyList[node]) {
+                    this.adjacencyList[node] = [];
+                }
+            }
+
+            addEdge(node1, node2) {
+                if (this.adjacencyList[node1] && this.adjacencyList[node2]) {
+                    this.adjacencyList[node1].push(node2);
+                    this.adjacencyList[node2].push(node1); // For undirected graph
+                }
+            }
+
+            dfs(start) {
+                const visited = new Set();
+                const result = [];
+                const dfsHelper = (node) => {
+                    if (!node || visited.has(node)) return;
+                    visited.add(node);
+                    result.push(node);
+                    for (const neighbor of this.adjacencyList[node]) {
+                        dfsHelper(neighbor);
+                    }
+                };
+                dfsHelper(start);
+                return result;
+            }
+
+            bfs(start) {
+                const visited = new Set();
+                const result = [];
+                const queue = [start];
+                visited.add(start);
+
+                while (queue.length > 0) {
+                    const node = queue.shift();
+                    result.push(node);
+                    for (const neighbor of this.adjacencyList[node]) {
+                        if (!visited.has(neighbor)) {
+                            visited.add(neighbor);
+                            queue.push(neighbor);
+                        }
+                    }
+                }
+                return result;
+            }
+        }
+
+        const graph = new Graph();
+
+        function addNode() {
+            const input = document.getElementById('nodeInput').value.trim();
+            if (input) {
+                graph.addNode(input);
+                document.getElementById('nodeInput').value = ''; // Clear input
+                displayGraph();
+                document.getElementById("output").innerText = `"${input}" has been added to the graph.`;
+            } else {
+                alert('Please enter a value to add as a node.');
+            }
+        }
+
+        function addEdge() {
+            const input = document.getElementById('edgeInput').value.trim();
+            const [node1, node2] = input.split(',').map(n => n.trim());
+            if (node1 && node2) {
+                graph.addEdge(node1, node2);
+                document.getElementById('edgeInput').value = ''; // Clear input
+                displayGraph();
+                document.getElementById("output").innerText = `Edge "${node1} - ${node2}" has been added.`;
+            } else {
+                alert('Please enter two node values separated by a comma.');
+            }
+        }
+
+        function dfs() {
+            const startNode = prompt("Enter the starting node for DFS:");
+            if (graph.adjacencyList[startNode]) {
+                const result = graph.dfs(startNode);
+                document.getElementById("output").innerText = `DFS Traversal: ${result.join(', ')}`;
+            } else {
+                alert('Node not found in the graph.');
+            }
+        }
+
+        function bfs() {
+            const startNode = prompt("Enter the starting node for BFS:");
+            if (graph.adjacencyList[startNode]) {
+                const result = graph.bfs(startNode);
+                document.getElementById("output").innerText = `BFS Traversal: ${result.join(', ')}`;
+            } else {
+                alert('Node not found in the graph.');
+            }
+        }
+
+        function displayGraph() {
+            const elementsDisplay = document.getElementById('graphElements');
+            if (Object.keys(graph.adjacencyList).length === 0) {
+                elementsDisplay.innerText = 'Graph is empty.';
+            } else {
+                elementsDisplay.innerText = JSON.stringify(graph.adjacencyList, null, 2);
+            }
+        }
+    </script>
+
+    <style>
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .graph-controls {
+            display: flex;
+            flex-direction: column; /* Stack buttons vertically */
+            margin-bottom: 20px;
+        }
+
+        .graph-controls input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px; /* Space between input and first button */
+        }
+
+        .graph-controls button {
+            padding: 10px 15px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 10px; /* Gap between buttons */
+        }
+
+        .graph-controls button:hover {
+            background-color: #0056b3;
+        }
+
+        .graph-display {
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+
+        .elements-display {
+            margin-top: 10px;
+            white-space: pre-wrap; /* Preserve whitespace for graph display */
+            font-family: monospace; /* Use monospace font for graph structure */
+        }
+
+        .output-message {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</body>
+</html>
