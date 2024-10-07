@@ -5,6 +5,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Graph Operations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .graph-controls {
+            display: flex;
+            flex-direction: column; /* Stack buttons vertically */
+            margin-bottom: 20px;
+        }
+
+        .graph-controls input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px; /* Space between input and first button */
+        }
+
+        .graph-controls button {
+            padding: 10px 15px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 10px; /* Gap between buttons */
+        }
+
+        .graph-controls button:hover {
+            background-color: #0056b3;
+        }
+
+        .graph-display {
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+
+        .elements-display {
+            margin-top: 10px;
+            white-space: pre-wrap; /* Preserve whitespace for graph display */
+            font-family: monospace; /* Use monospace font for graph structure */
+        }
+
+        .output-message {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .graph-controls {
+                flex-direction: column; /* Stack elements vertically on small screens */
+            }
+
+            .graph-controls input, .graph-controls button {
+                width: 100%; /* Full width on small screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5em; /* Smaller font size for headings on small screens */
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -134,63 +221,5 @@
             }
         }
     </script>
-
-    <style>
-        .container {
-            max-width: 600px;
-            margin: auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .graph-controls {
-            display: flex;
-            flex-direction: column; /* Stack buttons vertically */
-            margin-bottom: 20px;
-        }
-
-        .graph-controls input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            margin-bottom: 10px; /* Space between input and first button */
-        }
-
-        .graph-controls button {
-            padding: 10px 15px;
-            border: none;
-            background-color: #007bff;
-            color: #fff;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin-bottom: 10px; /* Gap between buttons */
-        }
-
-        .graph-controls button:hover {
-            background-color: #0056b3;
-        }
-
-        .graph-display {
-            border: 1px solid #ccc;
-            padding: 10px;
-            border-radius: 4px;
-            background-color: #f9f9f9;
-        }
-
-        .elements-display {
-            margin-top: 10px;
-            white-space: pre-wrap; /* Preserve whitespace for graph display */
-            font-family: monospace; /* Use monospace font for graph structure */
-        }
-
-        .output-message {
-            margin-top: 10px;
-            font-weight: bold;
-        }
-    </style>
 </body>
 </html>

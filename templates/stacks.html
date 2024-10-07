@@ -3,8 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Stack Operations</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa; /* Light background for contrast */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #343a40; /* Dark text for readability */
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #ffffff; /* White background for the card */
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 90%; /* Responsive width */
+        }
+
+        h1 {
+            margin-bottom: 15px;
+            font-size: 28px;
+            text-align: center; /* Center align the title */
+        }
+
+        .stack-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .stack-controls input {
+            width: 70%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px; /* Increase font size for better readability */
+        }
+
+        .stack-controls button {
+            padding: 12px 15px;
+            border: none;
+            background-color: #28a745;
+            color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px; /* Increase button font size */
+            transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+        }
+
+        .stack-controls button:hover {
+            background-color: #218838;
+            transform: scale(1.05); /* Scale effect on hover */
+        }
+
+        .stack-display {
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            text-align: center; /* Center text in the stack display */
+        }
+
+        .elements-display {
+            margin-top: 10px;
+        }
+
+        .stack-element {
+            padding: 5px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 3px;
+            margin: 2px 0;
+        }
+
+        .output-message {
+            margin-top: 10px;
+            font-weight: bold;
+            text-align: center; /* Center align output messages */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 24px; /* Smaller font size for smaller screens */
+            }
+
+            .stack-controls {
+                flex-direction: column; /* Stack controls vertically on smaller screens */
+            }
+
+            .stack-controls input {
+                width: 100%; /* Full width for input on small screens */
+                margin-bottom: 10px; /* Space below input */
+            }
+
+            .stack-controls button {
+                width: 100%; /* Full width for buttons on small screens */
+                margin-bottom: 10px; /* Space below buttons */
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -56,67 +162,5 @@
             }
         }
     </script>
-
-    <style>
-        .container {
-            max-width: 600px;
-            margin: auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .stack-controls {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-
-        .stack-controls input {
-            width: 70%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .stack-controls button {
-            padding: 10px 15px;
-            border: none;
-            background-color: #28a745;
-            color: #fff;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .stack-controls button:hover {
-            background-color: #218838;
-        }
-
-        .stack-display {
-            border: 1px solid #ccc;
-            padding: 10px;
-            border-radius: 4px;
-            background-color: #f9f9f9;
-        }
-
-        .elements-display {
-            margin-top: 10px;
-        }
-
-        .stack-element {
-            padding: 5px;
-            background-color: #007bff;
-            color: #fff;
-            border-radius: 3px;
-            margin: 2px 0;
-        }
-
-        .output-message {
-            margin-top: 10px;
-            font-weight: bold;
-        }
-    </style>
 </body>
 </html>

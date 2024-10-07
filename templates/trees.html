@@ -20,10 +20,12 @@
             justify-content: center;
             align-items: center;
             height: 100vh; /* Full height */
+            padding: 20px; /* Add padding for smaller screens */
         }
 
         .container {
             max-width: 800px;
+            width: 100%; /* Full width */
             padding: 20px;
             text-align: center;
             background: #fff;
@@ -39,25 +41,28 @@
 
         .tree-controls {
             margin-bottom: 20px;
+            display: flex;
+            flex-direction: column; /* Stack buttons vertically */
+            gap: 10px; /* Space between buttons */
         }
 
         .tree-controls input {
             padding: 10px;
-            margin: 5px;
-            width: 80%; /* Wider input field */
+            margin: 5px 0; /* Margin on top and bottom for better spacing */
+            width: 100%; /* Full width */
             border: 1px solid #ccc;
             border-radius: 5px;
         }
 
         button {
             padding: 10px 15px;
-            margin: 5px;
             border: none;
             background-color: #28a745;
             color: white;
             cursor: pointer;
             border-radius: 5px;
             transition: background-color 0.3s ease;
+            width: 100%; /* Full width for buttons */
         }
 
         button:hover {
@@ -95,6 +100,10 @@
                 font-size: 2em;
             }
 
+            button {
+                padding: 10px; /* Smaller padding on buttons */
+            }
+
             .tree-controls input {
                 width: 100%; /* Full width on small screens */
             }
@@ -118,8 +127,10 @@
             <button id="inOrder">In-Order Traversal</button>
             <button id="preOrder">Pre-Order Traversal</button>
             <button id="postOrder">Post-Order Traversal</button>
-            <button id="search">Search Element</button>
-            <input type="number" id="searchElement" placeholder="e.g., 10">
+            <form id="searchForm" style="display: flex; flex-direction: column;">
+                <input type="number" id="searchElement" placeholder="e.g., 10">
+                <button type="button" id="search">Search Element</button>
+            </form>
         </div>
         <div class="output-message" id="outputMessage"></div>
         <div class="elements-display" id="treeDisplay"></div>

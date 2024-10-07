@@ -3,12 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Queue Operations</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa; /* Light background for contrast */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #343a40; /* Dark text for readability */
+        }
+
+        .container {
+            background-color: #ffffff; /* White background for the card */
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 90%; /* Responsive width */
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+
+        /* Form Styles */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Space between form elements */
+            margin-bottom: 20px; /* Space below the form */
+        }
+
+        input[type="text"] {
+            padding: 12px;
+            border: 1px solid #ced4da; /* Light gray border */
+            border-radius: 8px;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 12px;
+            background-color: #007bff; /* Blue color */
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.2s; /* Smooth transitions */
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            transform: scale(1.05); /* Scale effect on hover */
+        }
+
+        /* Output Section */
+        #output {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #555;
+            min-height: 24px; /* Space for output */
+        }
+
+        /* Queue Display */
+        #queue-display {
+            font-size: 18px;
+            margin-top: 10px;
+            color: #28a745; /* Green color for the queue display */
+            font-weight: bold;
+            min-height: 24px; /* Space for queue display */
+            padding: 10px;
+            border: 1px solid #28a745; /* Border for visual separation */
+            border-radius: 8px; /* Rounded corners for queue display */
+            background-color: #e9f7ef; /* Light green background for queue display */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 24px; /* Smaller font size for smaller screens */
+            }
+
+            button {
+                font-size: 14px; /* Smaller button text */
+            }
+
+            input[type="text"] {
+                font-size: 14px; /* Smaller input text */
+            }
+        }
+    </style>
 </head>
-<body class="queue-page">
-    <h1>Queue Operations</h1>
-    <div>
+<body>
+    <div class="container">
+        <h1>Queue Operations</h1>
         <form id="queue-form">
             <input type="text" id="queue-input" placeholder="Enter an element" required>
             <button type="button" onclick="enqueue()">Enqueue</button>
@@ -16,7 +113,7 @@
         </form>
         <div id="output"></div>
         <h2>Current Queue:</h2>
-        <div id="queue-display"></div>
+        <div id="queue-display">Queue is empty.</div> <!-- Default message for an empty queue -->
     </div>
 
     <script>
@@ -43,7 +140,12 @@
         }
 
         function displayQueue() {
-            document.getElementById("queue-display").innerText = queue.join(", ");
+            const queueDisplay = document.getElementById("queue-display");
+            if (queue.length === 0) {
+                queueDisplay.innerText = "Queue is empty."; // Update message if the queue is empty
+            } else {
+                queueDisplay.innerText = queue.join(", "); // Show current elements in the queue
+            }
         }
     </script>
 </body>
